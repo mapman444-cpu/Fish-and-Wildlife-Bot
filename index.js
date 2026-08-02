@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const http = require('http'); 
+const http = require('http');
 const {
     Client,
     Collection,
@@ -12,8 +12,10 @@ const {
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Log Discord.js version
 console.log("Loaded Discord.js version:", require('discord.js').version);
 
+// Create client
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -22,27 +24,20 @@ const client = new Client({
     ]
 });
 
-process.on('unhandledRejection', (reason) => {
+// Error handlers
+process.on('unhandledRejection', reason => {
     console.error('Unhandled Rejection:', reason);
 });
 
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', err => {
     console.error('Uncaught Exception:', err);
 });
 
-process.on('unhandledRejection', (reason) => {
-    console.error('Unhandled Rejection:', reason);
-});
-
-process.on('uncaughtException', (err) => {
-    console.error('Uncaught Exception:', err);
-});
-
-client.on('error', (err) => {
+client.on('error', err => {
     console.error('Discord client error:', err);
 });
 
-client.on('shardError', (err) => {
+client.on('shardError', err => {
     console.error('Shard error:', err);
 });
 
@@ -54,19 +49,22 @@ client.on('reconnecting', () => {
     console.log('Bot reconnecting...');
 });
 
-
+// Heartbeat
 setInterval(() => {
     console.log("Heartbeat: Bot is alive");
-}, 5 * 60 * 1000); 
+}, 5 * 60 * 1000);
 
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('📦 Connected to MongoDB'))
     .catch(err => console.error('MongoDB Error:', err));
 
+// Command loader
 client.commands = new Collection();
 const commands = [];
 
-const commandsPath = path.join(__dirname, 'commands');
+// FIXED PATH — commands folder is NOT inside /src
+const commandsPath = path.join(__dirname, '..', 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -81,6 +79,7 @@ for (const file of commandFiles) {
     }
 }
 
+// Register slash commands
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 (async () => {
@@ -101,6 +100,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
     }
 })();
 
+// Interaction handler
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
@@ -129,6 +129,7 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+// Ready event
 client.once('ready', () => {
     console.log(`🤖 Bot successfully logged in as ${client.user.tag}`);
 
@@ -151,6 +152,7 @@ client.once('ready', () => {
     updateStatus();
 });
 
+// Render heartbeat server
 const PORT = process.env.PORT || 3000;
 
 http.createServer((req, res) => {
@@ -160,4 +162,5 @@ http.createServer((req, res) => {
     console.log(`🌐 Render PORT active on ${PORT}`);
 });
 
+// Login
 client.login(process.env.TOKEN);
