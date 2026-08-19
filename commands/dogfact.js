@@ -17,4 +17,4 @@ module.exports = {
         await interaction.reply(`🐶 **Dog Fact:** ${fact}`);
     }
 };
- 
+  

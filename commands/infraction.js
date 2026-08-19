@@ -87,7 +87,7 @@ module.exports = {
 
         // Build embed
         const embed = new EmbedBuilder()
-            .setTitle(`${config.CGFD_LOGO} Casa Grande Fire Department Infraction`)
+            .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Infraction`)
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
             .addFields(
                 { name: 'Firefighter', value: `${targetUser}` },
@@ -131,3 +131,4 @@ module.exports = {
         }
     }
 };
+ 

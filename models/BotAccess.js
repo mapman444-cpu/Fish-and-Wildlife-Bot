@@ -8,3 +8,4 @@ const BotAccessSchema = new mongoose.Schema({
 }, { strict: true });
 
 module.exports = mongoose.model('BotAccess', BotAccessSchema);
+ 

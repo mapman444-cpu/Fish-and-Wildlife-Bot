@@ -25,4 +25,4 @@ module.exports = {
         await interaction.reply(`😂 ${joke}`);
     }
 };
- 
+  

@@ -14,4 +14,4 @@ module.exports = {
         await interaction.reply(url);
     }
 };
- 
+  

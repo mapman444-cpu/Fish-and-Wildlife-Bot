@@ -15,4 +15,4 @@ module.exports = {
         await interaction.reply(`🎱 ${answer}`);
     }
 };
- 
+  

@@ -42,7 +42,7 @@ module.exports = {
             days: 60 * 60 * 24,
             weeks: 60 * 60 * 24 * 7
         };
-
+ 
         const durationMs = duration * multipliers[unit] * 1000;
 
         await member.roles.add(role);

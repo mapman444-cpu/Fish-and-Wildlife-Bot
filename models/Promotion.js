@@ -45,3 +45,4 @@ const PromotionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Promotion', PromotionSchema);
+ 

@@ -14,4 +14,4 @@ module.exports = {
         await interaction.reply(user.displayAvatarURL({ size: 1024 }));
     }
 };
-   
+    

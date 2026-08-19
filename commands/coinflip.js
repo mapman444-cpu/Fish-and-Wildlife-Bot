@@ -7,4 +7,4 @@ module.exports = {
         await interaction.reply(`🪙 **${result}**`);
     }
 };
- 
+  

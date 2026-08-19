@@ -135,7 +135,7 @@ client.once('ready', () => {
 
     const statuses = [
         {
-            name: 'Watching over Casa Grande Fire Department',
+            name: 'Watching over Arizona Game & Fish',
             type: ActivityType.Watching
         },
     ];
@@ -164,3 +164,4 @@ http.createServer((req, res) => {
 
 // Login
 client.login(process.env.TOKEN);
+ 

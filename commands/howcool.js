@@ -8,4 +8,4 @@ module.exports = {
         await interaction.reply(`😎 Coolness level: **${percent}%**`);
     }
 };
- 
+  

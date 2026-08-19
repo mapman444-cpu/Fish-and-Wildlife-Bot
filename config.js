@@ -4,4 +4,4 @@ module.exports = {
     demotionLogChannel: "1530352251372044288",
     FAG_LOGO: "<:GameFishLogo:1530343432348893424>"
 };
-    
+     

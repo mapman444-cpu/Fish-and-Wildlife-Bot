@@ -13,4 +13,4 @@ const InfractionSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Infraction', InfractionSchema);
-  
+   

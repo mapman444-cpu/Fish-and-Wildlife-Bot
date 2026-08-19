@@ -110,7 +110,7 @@ module.exports = {
         });
 
         const embed = new EmbedBuilder()
-            .setTitle(`${config.CGFD_LOGO} Casa Grande Fire Department Demotion`)
+            .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Demotion`)
             .setColor('#FF0000')
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
             .addFields(
@@ -146,3 +146,4 @@ module.exports = {
         }
     }
 };
+ 
