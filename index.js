@@ -20,7 +20,8 @@ const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessages
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent   // REQUIRED for message commands
     ]
 });
 
@@ -129,6 +130,46 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+// ---------------------------------------------------------
+// 📌 MESSAGE COMMANDS (-support, -close, -rename) WITH AUTO-DELETE
+// ---------------------------------------------------------
+client.on("messageCreate", async (message) => {
+    if (message.author.bot) return;
+
+    const msg = message.content.trim();
+
+    // -support
+    if (msg.startsWith("-support")) {
+        await message.delete().catch(() => {});
+        return message.channel.send("A support ticket has been opened. How can I help?");
+    }
+
+    // -close
+    if (msg.startsWith("-close")) {
+        await message.delete().catch(() => {});
+        return message.channel.send("This ticket has been closed.");
+    }
+
+    // -rename
+    if (msg.startsWith("-rename")) {
+        await message.delete().catch(() => {});
+
+        const newName = msg.replace("-rename", "").trim();
+
+        if (!newName) {
+            return message.channel.send("Please provide a new name. Example: `-rename New Ticket Name`");
+        }
+
+        try {
+            await message.channel.setName(newName);
+            return message.channel.send(`Channel renamed to **${newName}**`);
+        } catch (err) {
+            console.error(err);
+            return message.channel.send("I couldn't rename the channel.");
+        }
+    }
+});
+
 // Ready event
 client.once('ready', () => {
     console.log(`🤖 Bot successfully logged in as ${client.user.tag}`);
@@ -164,4 +205,3 @@ http.createServer((req, res) => {
 
 // Login
 client.login(process.env.TOKEN);
- 
