@@ -141,13 +141,11 @@ client.on("messageCreate", async (message) => {
     // -support
     if (msg.startsWith("-support")) {
         await message.delete().catch(() => {});
-        return message.channel.send("A support ticket has been opened. How can I help?");
     }
 
     // -close
     if (msg.startsWith("-close")) {
         await message.delete().catch(() => {});
-        return message.channel.send("This ticket has been closed.");
     }
 
     // -rename
@@ -155,10 +153,6 @@ client.on("messageCreate", async (message) => {
         await message.delete().catch(() => {});
 
         const newName = msg.replace("-rename", "").trim();
-
-        if (!newName) {
-            return message.channel.send("Please provide a new name. Example: `-rename New Ticket Name`");
-        }
 
         try {
             await message.channel.setName(newName);
