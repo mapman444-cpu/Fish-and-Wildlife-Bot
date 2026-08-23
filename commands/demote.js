@@ -31,7 +31,7 @@ module.exports = {
 
         // REQUIRED OPTIONS FIRST
         .addUserOption(option =>
-            option.setName('firefighter')
+            option.setName('warden ')
                 .setDescription('Warden being demoted')
                 .setRequired(true)
         )
@@ -76,7 +76,7 @@ module.exports = {
         let webhookSent = false;
         await interaction.deferReply({ ephemeral: false });
 
-        const targetUser = interaction.options.getUser('firefighter');
+        const targetUser = interaction.options.getUser('warden ');
         const member = await interaction.guild.members.fetch(targetUser.id);
 
         const newRank = interaction.options.getRole('new_rank');
@@ -111,14 +111,14 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Demotion`)
-            .setColor('#FF0000')
+            .setColor('#0ea34d')
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
             .addFields(
                 { name: 'Warden', value: `${targetUser}` },
                 { name: 'Old Rank', value: `<@&${oldRank.id}>` },
                 { name: 'Old Callsign', value: interaction.options.getString('old_callsign') || 'Not specified' },
                 { name: 'New Rank', value: `<@&${newRank.id}>` },
-                { name: 'New Callsign', value: interaction.options.getString('new_callsign') || 'Not specified' },
+                { name: 'New Callsign', value: interaction.options.getString('new_callsign') || 'N/A' },
                 { name: 'Reason', value: reason },
                 { name: 'Notes', value: notes },
                 { name: 'Case ID', value: caseId }

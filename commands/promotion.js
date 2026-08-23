@@ -120,6 +120,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Promotion`)
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
+            .setColor('#0ea34d')
             .addFields(
                 { name: 'Warden', value: `${targetUser}` },
                 { name: 'Old Rank', value: `<@&${oldRank.id}>` },

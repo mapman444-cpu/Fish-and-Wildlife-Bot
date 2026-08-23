@@ -27,9 +27,9 @@ function shouldProcessInteraction(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('infraction')
-        .setDescription('Issue an infraction to a firefighter')
+        .setDescription('Issue an infraction to a game warden.')
         .addUserOption(option =>
-            option.setName('firefighter')
+            option.setName('warden')
                 .setDescription('Warden receiving the infraction')
                 .setRequired(true))
         .addRoleOption(option =>
@@ -57,7 +57,7 @@ module.exports = {
 
         let webhookSent = false;
 
-        const targetUser = interaction.options.getUser('firefighter');
+        const targetUser = interaction.options.getUser('warden');
         const punishmentRole = interaction.options.getRole('punishment');
         const reason = interaction.options.getString('reason');
         const notes = interaction.options.getString('notes') || 'None';
@@ -89,8 +89,9 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Infraction`)
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
+            .setColor('#0ea34d')
             .addFields(
-                { name: 'Firefighter', value: `${targetUser}` },
+                { name: 'Warden', value: `${targetUser}` },
                 { name: 'Employee Callsign', value: `<@&${interaction.options.getRole('employee_callsign').id}>` },
                 { name: 'Punishment', value: `<@&${punishmentRole.id}>` },
                 { name: 'Reason', value: reason },
@@ -102,10 +103,10 @@ module.exports = {
 
         // Respond to command
         await interaction.editReply({
-            content: `Firefighter has successfully been infracted.`,
+            content: `Warden has successfully been infracted.`,
         });
 
-        // DM firefighter
+        // DM warden
         await targetUser.send({ embeds: [embed] }).catch(() => {
             console.log(`Could not DM ${targetUser.tag}. Their DMs may be closed.`);
         });

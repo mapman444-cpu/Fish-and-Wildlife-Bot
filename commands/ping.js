@@ -9,7 +9,7 @@ module.exports = {
         const sent = await interaction.reply({ content: 'Pinging...', fetchReply: true });
 
         const embed = new EmbedBuilder()
-            .setTitle( 'Casa Grande Fire Department Bot Response Time')
+            .setTitle( 'Arizona Game & Fish Bot Response Time')
             .setColor('#9b0c0c')
             .addFields(
                 { name: 'Websocket Latency', value: `${interaction.client.ws.ping}ms` },
