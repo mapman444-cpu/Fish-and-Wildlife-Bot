@@ -78,23 +78,24 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 })();
 
 // ---------------------------------------------------------
-// Message Commands (ONLY load files meant for "-" commands)
+// Message Commands (for "-" prefix)
 // ---------------------------------------------------------
 client.messageCommands = new Collection();
 
-// Only load files that YOU want to be "-" commands
+const messagesPath = path.join(__dirname, "messages");
 const dashCommands = ["support.js", "rename.js", "add.js", "remove.js", "cr.js"];
 
 for (const file of dashCommands) {
-    const filePath = path.join(commandsPath, file);
+    const filePath = path.join(messagesPath, file);
     const command = require(filePath);
 
-    if ('name' in command && 'execute' in command) {
+    if ("name" in command && "execute" in command) {
         client.messageCommands.set(command.name.toLowerCase(), command);
     } else {
         console.log(`⚠️ Dash command ${file} is missing "name" or "execute".`);
     }
 }
+
 
 // ---------------------------------------------------------
 // Slash Command Handler
