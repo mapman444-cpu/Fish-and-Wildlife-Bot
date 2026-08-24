@@ -14,7 +14,7 @@ module.exports = {
   description: "Send a close request in the current ticket.",
   roles: ["1530278365506965624", "1539792807181418606"],
 
-  allowedCategories: ["1530282852040577044", "CATEGORY_ID_2"],
+  allowedCategories: ["1530282852040577044", "1540862045384085514"],
 
   execute: async function (message, client, args) {
     const allowedCategories = module.exports.allowedCategories;

@@ -31,7 +31,7 @@ module.exports = {
 
         // REQUIRED OPTIONS FIRST
         .addUserOption(option =>
-            option.setName('warden ')
+            option.setName('warden')
                 .setDescription('Warden being demoted')
                 .setRequired(true)
         )
@@ -76,7 +76,7 @@ module.exports = {
         let webhookSent = false;
         await interaction.deferReply({ ephemeral: false });
 
-        const targetUser = interaction.options.getUser('warden ');
+        const targetUser = interaction.options.getUser('warden');
         const member = await interaction.guild.members.fetch(targetUser.id);
 
         const newRank = interaction.options.getRole('new_rank');

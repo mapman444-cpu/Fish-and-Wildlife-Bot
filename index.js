@@ -50,11 +50,6 @@ client.on('reconnecting', () => {
     console.log('Bot reconnecting...');
 });
 
-// Heartbeat
-setInterval(() => {
-    console.log("Heartbeat: Bot is alive");
-}, 5 * 60 * 1000);
-
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('📦 Connected to MongoDB'))
@@ -64,8 +59,8 @@ mongoose.connect(process.env.MONGO_URI)
 client.commands = new Collection();
 const commands = [];
 
-// FIXED PATH — commands folder is NOT inside /src
-const commandsPath = path.join(__dirname, '..', 'commands');
+// FIXED PATH — commands folder is inside the project directory
+const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
