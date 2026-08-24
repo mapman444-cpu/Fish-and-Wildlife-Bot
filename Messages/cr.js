@@ -7,8 +7,9 @@ const {
   MessageFlags,
 } = require("discord.js");
 
-const AssistanceModel = require("../../Database/Models/AssistanceModel");
-const SupportModel = require("../../Database/Models/SupportModel");
+const AssistanceModel = require("../Database/Models/AssistanceModel");
+const SupportModel = require("../Database/Models/SupportModel");
+
 
 module.exports = {
   name: "cr",
