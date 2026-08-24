@@ -19,7 +19,9 @@ module.exports = {
   name: "support",
   description: "Message command: sends the support ticket panel.",
 
-  async execute(message, client, args) {
+  async execute(message) {
+    const client = message.client;
+
     // Permission check
     if (!message.member.roles.cache.some((r) => STAFF_ROLES.includes(r.id))) {
       const reply = await message.reply("You do not have permission to use this command.");

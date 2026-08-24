@@ -4,20 +4,24 @@ module.exports = {
   roles: ["1530278365506965624", "1539792807181418606"],
   cooldown: 3,
 
-  execute: async function (message, client, args) {
+  async execute(message) {
+    const client = message.client;
+
     if (!message.guild) {
       return await message
         .reply("This command can only be used in a server.")
         .then((m) => setTimeout(() => m.delete().catch(() => {}), 5000));
     }
 
-    const roleMentions = message.mentions.roles;
+    // Extract args from message content
+    const args = message.content.split(" ").slice(1);
 
+    const roleMentions = message.mentions.roles;
     const roleIds = [...roleMentions.values()].map((r) => r.id);
 
     if (roleIds.length === 0) {
       const reply = await message.reply(
-        "Usage: `-add @role1`\nExample: `-add @Member`",
+        "Usage: `-add @role1`\nExample: `-add @Member`"
       );
       setTimeout(() => reply.delete().catch(() => {}), 5000);
       await message.delete().catch(() => {});
@@ -40,6 +44,7 @@ module.exports = {
     const addedNames = added
       .map((id) => message.guild.roles.cache.get(id)?.name || id)
       .join(", ");
+
     const failedNames = failed
       .map((id) => message.guild.roles.cache.get(id)?.name || id)
       .join(", ");
@@ -52,7 +57,9 @@ module.exports = {
       content += `\nFailed to add **${failed.length}** role(s): ${failedNames}`;
     }
 
+    // Delete the user's command message
     await message.delete().catch(() => {});
+
     const confirm = await message.channel.send(content.trim());
     setTimeout(() => confirm.delete().catch(() => {}), 5000);
   },

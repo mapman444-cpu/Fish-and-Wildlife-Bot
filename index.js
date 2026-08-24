@@ -1,5 +1,5 @@
 // ---------------------------------------------------------
-// Discord Bot with Slash + Message Commands
+// Discord Bot with Slash + "-" Message Commands
 // ---------------------------------------------------------
 const fs = require('fs');
 const path = require('path');
@@ -24,7 +24,7 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent // REQUIRED for message commands
+        GatewayIntentBits.MessageContent
     ]
 });
 
@@ -46,7 +46,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Slash Command Loader
 // ---------------------------------------------------------
 client.commands = new Collection();
-const commands = [];
+const slashCommands = [];
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -57,9 +57,7 @@ for (const file of commandFiles) {
 
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
-        commands.push(command.data.toJSON());
-    } else {
-        console.log(`⚠️ Slash command at ${filePath} is missing "data" or "execute".`);
+        slashCommands.push(command.data.toJSON());
     }
 }
 
@@ -71,7 +69,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
         console.log('🔄 Refreshing slash commands...');
         await rest.put(
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-            { body: commands }
+            { body: slashCommands }
         );
         console.log('✅ Slash commands registered successfully.');
     } catch (error) {
@@ -80,33 +78,32 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 })();
 
 // ---------------------------------------------------------
-// Message Command Loader (for "-" prefix)
+// Message Commands (ONLY load files meant for "-" commands)
 // ---------------------------------------------------------
 client.messageCommands = new Collection();
-const messageCommandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of messageCommandFiles) {
+// Only load files that YOU want to be "-" commands
+const dashCommands = ["support.js", "rename.js", "add.js", "remove.js", "cr.js"];
+
+for (const file of dashCommands) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
 
     if ('name' in command && 'execute' in command) {
         client.messageCommands.set(command.name.toLowerCase(), command);
     } else {
-        console.log(`⚠️ Message command at ${filePath} is missing "name" or "execute".`);
+        console.log(`⚠️ Dash command ${file} is missing "name" or "execute".`);
     }
 }
 
 // ---------------------------------------------------------
-// Interaction Handler (Slash Commands)
+// Slash Command Handler
 // ---------------------------------------------------------
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
-    if (!command) {
-        console.error(`❌ No command found for ${interaction.commandName}`);
-        return;
-    }
+    if (!command) return;
 
     try {
         await command.execute(interaction);
@@ -125,7 +122,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 // ---------------------------------------------------------
-// Message Handler (for "-" prefix commands)
+// "-" Message Command Handler
 // ---------------------------------------------------------
 client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
@@ -149,7 +146,7 @@ client.on("messageCreate", async (message) => {
 // ---------------------------------------------------------
 // Ready Event
 // ---------------------------------------------------------
-client.once('ready', () => {
+client.once('clientReady', () => {
     console.log(`🤖 Bot successfully logged in as ${client.user.tag}`);
 
     const statuses = [
