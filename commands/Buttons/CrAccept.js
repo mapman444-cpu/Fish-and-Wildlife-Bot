@@ -38,7 +38,7 @@ module.exports = {
       await interaction.update({
         components: [
           new ContainerBuilder().addTextDisplayComponents((x) =>
-            x.setContent("**Ticket accepted. Closing now...**"),
+            x.setContent("**Close request accepted. Closing ticket now...**"),
           ),
         ],
         flags: 1 << 15,
