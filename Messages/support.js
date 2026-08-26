@@ -1,19 +1,13 @@
 const {
   ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
-  ContainerBuilder,
-  MediaGalleryBuilder,
-  MediaGalleryItemBuilder,
-  SeparatorBuilder,
-  MessageFlags,
+  EmbedBuilder
 } = require("discord.js");
 
 const STAFF_ROLES = ["1539794524048728154"];
 const SUPPORT_CHANNEL_ID = "1406372387963801631";
-const BANNER = "YOUR_BANNER_HERE";
+const BANNER = "https://i.imgur.com/4AiXzf8.jpeg"; // temporary test banner
 
 module.exports = {
   name: "support",
@@ -40,63 +34,56 @@ module.exports = {
         .then((m) => setTimeout(() => m.delete().catch(() => {}), 5000));
     }
 
-    // Build panel
-    const container = new ContainerBuilder()
-      .addMediaGalleryComponents(
-        new MediaGalleryBuilder().addItems(
-          new MediaGalleryItemBuilder().setURL(BANNER),
-        ),
-      )
-      .addSeparatorComponents(new SeparatorBuilder().setDivider(false))
-      .addTextDisplayComponents((t) =>
-        t.setContent(
-          "> 🛠️ **General Support**\n" +
-          "• Questions & Assistance\n" +
-          "• Discord Server Help\n" +
-          "• Rules & Policy Clarification\n" +
-          "• Department Resources\n\n" +
-          "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
-          "📝 **Warden Report**\n" +
-          "• Officer Conduct Reports\n" +
-          "• Policy Violations\n" +
-          "• Disciplinary Appeals\n" +
-          "• Internal Incident Reports\n\n" +
-          "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
-          "👑 **Leadership Ticket**\n" +
-          "• Command Staff Contact\n" +
-          "• Critical Incident Reports\n" +
-          "• Operational Concerns\n" +
-          "• Confidential Matters\n\n" +
-          "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
-          "⚠️ **Notice**\n" +
-          "• Select the correct category.\n" +
-          "• All tickets are reviewed by authorized AG&F Staff.\n" +
-          "• Misuse of the ticket system may result in disciplinary action."
-        )
-      )
-      .addSeparatorComponents(
-        new SeparatorBuilder().setDivider(true).setSpacing(1),
-      )
-      .addActionRowComponents(
-        new ActionRowBuilder().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId("support:menu")
-            .setPlaceholder("Select support type.")
-            .addOptions(
-              new StringSelectMenuOptionBuilder()
-                .setLabel("General Support")
-                .setValue("general"),
-              new StringSelectMenuOptionBuilder()
-                .setLabel("Administrative Support")
-                .setValue("admin"),
-            ),
-        ),
+    // Build embed panel
+    const embed = new EmbedBuilder()
+      .setColor("#2b2d31")
+      .setImage(BANNER)
+      .setTitle("Arizona Game & Fish Support Panel")
+      .setDescription(
+        "🛠️ **General Support**\n" +
+        "• Questions & Assistance\n" +
+        "• Discord Server Help\n" +
+        "• Rules & Policy Clarification\n" +
+        "• Department Resources\n\n" +
+        "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
+        "📝 **Warden Report**\n" +
+        "• Officer Conduct Reports\n" +
+        "• Policy Violations\n" +
+        "• Disciplinary Appeals\n" +
+        "• Internal Incident Reports\n\n" +
+        "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
+        "👑 **Leadership Ticket**\n" +
+        "• Command Staff Contact\n" +
+        "• Critical Incident Reports\n" +
+        "• Operational Concerns\n" +
+        "• Confidential Matters\n\n" +
+        "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n" +
+        "⚠️ **Notice**\n" +
+        "• Select the correct category.\n" +
+        "• All tickets are reviewed by authorized AG&F Staff.\n" +
+        "• Misuse of the ticket system may result in disciplinary action."
       );
+
+   // Select menu
+const row = new ActionRowBuilder().addComponents(
+  new StringSelectMenuBuilder()
+    .setCustomId("support:menu")
+    .setPlaceholder("Select support type.")
+    .addOptions(
+      new StringSelectMenuOptionBuilder()
+        .setLabel("General Support")
+        .setValue("General_Support"),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("Administrative Support")
+        .setValue("Administrative_Support")
+    )
+);
+
 
     // Send panel
     await supportChannel.send({
-      components: [container],
-      flags: MessageFlags.IsComponentsV2,
+      embeds: [embed],
+      components: [row]
     });
   },
 };

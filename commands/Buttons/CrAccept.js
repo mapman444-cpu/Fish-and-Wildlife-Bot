@@ -5,8 +5,8 @@ const {
   FileBuilder,
   MessageFlags,
 } = require("discord.js");
-const AssistanceModel = require("../../Database/Models/AssistanceModel");
-const SupportModel = require("../../Database/Models/SupportModel");
+const AssistanceModel = require("../../Models/AssistanceModel");
+const SupportModel = require("../../Models/SupportModel");
 const discordTranscripts = require("discord-html-transcripts");
 
 const transcriptsChannelId = "1530284471297769512";
