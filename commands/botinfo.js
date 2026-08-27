@@ -18,7 +18,7 @@ module.exports = {
         const client = interaction.client;
 
         const embed = new EmbedBuilder()
-            .setTitle('Bot Information')
+            .setTitle('Arizona Game & Fish Bot Information')
             .setColor(0x00A2E8)
             .addFields(
                 {
