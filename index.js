@@ -383,7 +383,7 @@ client.once("ready", () => {
 
     const statuses = [
         {
-            name: "Arizona Game & Fish",
+            name: "Watching over Arizona Game & Fish",
             type: ActivityType.Watching
         }
     ];
