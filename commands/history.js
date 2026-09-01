@@ -81,13 +81,13 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId('prev')
-        .setLabel('Previous')
+        .setLabel('⬅️ Previous')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(true),
 
       new ButtonBuilder()
         .setCustomId('next')
-        .setLabel('Next')
+        .setLabel(' ➡️ Next')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(pages.length === 1)
     );
@@ -119,13 +119,13 @@ module.exports = {
       const newRow = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setCustomId('prev')
-          .setLabel('Previous')
+          .setLabel('⬅️ Previous')
           .setStyle(ButtonStyle.Secondary)
           .setDisabled(page === 0),
 
         new ButtonBuilder()
           .setCustomId('next')
-          .setLabel('Next')
+          .setLabel(' ➡️ Next')
           .setStyle(ButtonStyle.Secondary)
           .setDisabled(page === pages.length - 1)
       );

@@ -27,7 +27,7 @@ function shouldProcessInteraction(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('demotion')
-        .setDescription('Demote a firefighter')
+        .setDescription('Demote a Warden')
 
         // REQUIRED OPTIONS FIRST
         .addUserOption(option =>

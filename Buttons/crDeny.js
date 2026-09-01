@@ -8,7 +8,7 @@ module.exports = {
       components: [
         new ContainerBuilder().addTextDisplayComponents((t) =>
           t.setContent(
-            `## Close Request Denied\n<@${interaction.user.id}> has denied the close request. The ticket will remain open until it has been fully resolved.`,
+            `## Close Request Denied\n<@${interaction.user.id}> has denied the close request. The ticket will remain open.`,
           ),
         ),
       ],

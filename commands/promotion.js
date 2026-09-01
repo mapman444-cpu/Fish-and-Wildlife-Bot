@@ -71,7 +71,6 @@ module.exports = {
 
     async execute(interaction) {
 
-        // Prevent "Unknown interaction"
         await interaction.deferReply({ ephemeral: false });
 
         let webhookSent = false;
@@ -89,7 +88,6 @@ module.exports = {
         const now = new Date();
         const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
 
-        // Remove old rank unless protected
         if (PROTECTED_ROLES.includes(oldRank.id)) {
             console.log(`Skipped removing protected role: ${oldRank.id}`);
         } else {
@@ -98,12 +96,10 @@ module.exports = {
             });
         }
 
-        // Add new rank
         await member.roles.add(newRank.id).catch(() => {
             console.log(`Could not add new rank ${newRank.name} to ${member.user.tag}`);
         });
 
-        // Save promotion record
         await Promotion.create({
             caseId,
             userId: user.id,
@@ -116,7 +112,6 @@ module.exports = {
             date: now
         });
 
-        // Build embed
         const embed = new EmbedBuilder()
             .setTitle(`${config.FAG_LOGO} Arizona Game & Fish Promotion`)
             .setThumbnail(targetUser.displayAvatarURL({ size: 1024 }))
@@ -133,21 +128,17 @@ module.exports = {
             )
             .setFooter({ text: `Date: ${formattedDate}` });
 
-        // Respond to command
         await interaction.editReply(`Success!`);
 
-        // DM the promoted warden
         await targetUser.send({ embeds: [embed] }).catch(() => {
             console.log(`Could not DM ${targetUser.tag}. Their DMs may be closed.`);
         });
 
-        // Log channel
         const logChannel = interaction.guild.channels.cache.get(config.promotionLogChannel);
         if (logChannel) {
             logChannel.send({ embeds: [embed] });
         }
 
-        // Webhook 
         if (!webhookSent && process.env.PROMOTION_WEBHOOK_URL) {
             webhookSent = true;
             try {

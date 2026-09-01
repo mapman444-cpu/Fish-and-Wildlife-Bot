@@ -27,7 +27,7 @@ function shouldProcessInteraction(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('infraction')
-        .setDescription('Issue an infraction to a game warden.')
+        .setDescription('Issue an infraction to a warden.')
         .addUserOption(option =>
             option.setName('warden')
                 .setDescription('Warden receiving the infraction')

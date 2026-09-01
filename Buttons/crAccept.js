@@ -5,11 +5,11 @@ const {
   FileBuilder,
   MessageFlags,
 } = require("discord.js");
-const AssistanceModel = require("../../Models/AssistanceModel");
-const SupportModel = require("../../Models/SupportModel");
+const AssistanceModel = require("../../Database/Models/AssistanceModel");
+const SupportModel = require("../../Database/Models/SupportModel");
 const discordTranscripts = require("discord-html-transcripts");
 
-const transcriptsChannelId = "1530284471297769512";
+const transcriptsChannelId = "1508253615641460847";
 
 module.exports = {
   customID: "crAccept:button",
@@ -38,7 +38,7 @@ module.exports = {
       await interaction.update({
         components: [
           new ContainerBuilder().addTextDisplayComponents((x) =>
-            x.setContent("**Close request accepted. Closing ticket now...**"),
+            x.setContent("**Ticket accepted. Closing now...**"),
           ),
         ],
         flags: 1 << 15,
